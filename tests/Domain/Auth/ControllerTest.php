@@ -4,12 +4,10 @@ namespace Domain\Auth;
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Domain\User\User;
 
 class ControllerTest extends \TestCase
 {
-    use DatabaseTransactions;
     /**
      * A basic test example.
      *
