@@ -2,6 +2,8 @@
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Domain\User\User;
+
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     use DatabaseTransactions;
@@ -24,5 +26,25 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    public function getHeaders($password = '123456', User $user=null)
+    {
+        if(is_null($user)){
+            $user=factory(User::class)->create([
+                'password'=>bcrypt($password), 
+            ]);
+        }
+        $data = [
+            'username'=>$user->username,
+            'password'=>$password
+        ];
+        $this->post('auth/login', $data);
+        $data = $this->response->getContent();
+        $token = json_decode($data)->token;
+
+        return [
+        'Authorization' => 'Bearer '.$token
+        ];
     }
 }
