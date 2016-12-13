@@ -11,7 +11,14 @@
 |
 */
 use Domain\User\User;
+use Domain\Client\Client;
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(Client::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+    ];
+});
+
 $factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
 

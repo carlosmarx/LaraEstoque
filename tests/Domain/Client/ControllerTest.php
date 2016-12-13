@@ -27,15 +27,17 @@ class ControllerTest extends \TestCase
         ]);
     }
 
-    public function testCreateWithCpf()
+    public function testCreateWithCpfAndBirthdate()
     {
         $headers = $this->getHeaders();
-        $name = 'Cliente 01';
-        $cpf  = '81594380368';
+        $name       =    'Cliente 01';
+        $cpf        =    '81594380368';
+        $birthdate  =    '1980-10-30';
         
         $data = [
             'name'=>$name,
-            'cpf'=>$cpf
+            'cpf'=>$cpf,
+            'birthdate'=>$birthdate,
         ];
         
         $this->post('client', $data, $headers);
@@ -43,15 +45,17 @@ class ControllerTest extends \TestCase
         $this->seeStatusCode(200);
         $this->seeJson([    
           'name'=>$name,
-          'cpf'=>$cpf
+          'cpf'=>$cpf,
+          'birthdate'=>$birthdate,
         ]);
         $this->seeInDatabase('clients', [
           'name' => $name,
-          'cpf' => $cpf
+          'cpf' => $cpf,
+          'birthdate' => $birthdate
         ]);
     }
 
-    public function testCreateWithCpfAndBirthdate()
+    public function testCreateWithUniqueCpf()
     {
         $headers = $this->getHeaders();
         $name       =    'Cliente 01';
